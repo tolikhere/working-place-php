@@ -1,12 +1,15 @@
 <?php
 
-require_once '../PaymentGateway/Stripe/Transaction.php';
-require_once '../PaymentGateway/Paddle/CustomerProfile.php';
-require_once '../PaymentGateway/Paddle/Transaction.php';
+spl_autoload_register(function ($class) {
+    $path = __DIR__ . '/../' . lcfirst(str_replace('\\', '/', $class)) . '.php';
 
-//use PaymentGateway\Paddle as PD;
-use PaymentGateway\Paddle\{Transaction, CustomerProfile};
-use PaymentGateway\Stripe\Transaction as StripeTransaction;
+    if (file_exists($path)) {
+        require $path;
+    }
+});
+
+use App\PaymentGateway\Paddle\{Transaction, CustomerProfile};
+use App\PaymentGateway\Stripe\Transaction as StripeTransaction;
 
 $paddleTransaction = new Transaction();
 $stripeTransaction = new StripeTransaction();

@@ -6,7 +6,24 @@ namespace App\PaymentGateway\Paddle;
 
 class Transaction
 {
+    public const STATUS_PAID = 'paid';
+    public const STATUS_PENDING = 'pending';
+    public const STATUS_DECLINED = 'declined';
+    private string $status;
     public function __construct()
     {
+        $this->setStatus(self::STATUS_PENDING);
+    }
+
+    /**
+     * Set the value of status
+     *
+     * @return  self
+     */
+    public function setStatus($status): self
+    {
+        $this->status = $status;
+
+        return $this;
     }
 }

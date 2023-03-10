@@ -8,13 +8,10 @@ class ToasterPro extends Toaster
 {
     public function __construct()
     {
-        // call parent's methods if you need them this way
         parent::__construct();
         $this->size = 4;
     }
 
-    // The signature of a child must the as parent
-    // And better name parameters the same as parent
     public function addSlice(string $slice): void
     {
         parent::addSlice($slice);
@@ -25,5 +22,12 @@ class ToasterPro extends Toaster
         foreach ($this->slices as $i => $slice) {
             echo ($i + 1) . ': Toasting ' . $slice . ' with bagels option' . PHP_EOL;
         }
+    }
+
+    // Don't do this way
+    // Better reconsider using inheritance
+    public function foo()
+    {
+        throw new \Exception('Not Supported');
     }
 }

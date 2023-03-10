@@ -14,4 +14,10 @@ $toaster->addSlice('bread');
 $toaster->addSlice('bread');
 $toaster->addSlice('bread');
 
-$toaster->toastBagel();
+//$toaster->toastBagel();
+
+foo($toaster);
+function foo(Toaster $toasterPro)
+{
+    $toasterPro->toast();
+}

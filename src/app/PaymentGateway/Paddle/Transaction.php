@@ -4,25 +4,30 @@ declare(strict_types=1);
 
 namespace App\PaymentGateway\Paddle;
 
-use App\Enums\Status;
-
 class Transaction
 {
-    private string $status;
-    public function __construct()
+    private static int $count = 0; // With static you cannot get access through
+                                   //  an arrow notation(obj->prop) to properties of classes
+    public function __construct(
+        public float $amount,
+        public string $description
+    ) {
+        self::$count++;
+    }
+
+    public function process()
     {
-        $this->setStatus(Status::PENDING);
+        array_map(static function () {
+            $this->amount = 35; // user static in classes for callbackfunctions to prevent
+        }, [1]);                // access to properties of classes
+        echo 'Processing paddle transaction...';
     }
 
     /**
-     * Set the value of status
-     *
-     * @return  self
+     * Get the value of count
      */
-    public function setStatus(Status $status): self
+    public static function getCount(): int
     {
-        $this->status = $status->toString();
-
-        return $this;
+        return self::$count;
     }
 }

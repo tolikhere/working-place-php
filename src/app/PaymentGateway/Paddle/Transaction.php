@@ -15,26 +15,20 @@ class Transaction
 
     public function process()
     {
-        echo  'Processing $' . $this->getAmount() . ' transaction';
+        echo  'Processing $' . $this->amount . ' transaction';
+
+        $this->generateReceipt();
+
+        $this->sendEmail();
     }
 
-    /**
-     * Get the value of amount
-     *
-     * @return float
-     */
-    public function getAmount(): float
+    private function generateReceipt()
     {
-        return $this->amount;
+        # code...
     }
 
-    /**
-     * Set the value of amount
-     *
-     * @return  void
-     */
-    public function setAmount($amount): void
+    private function sendEmail()
     {
-            $this->amount = $amount;
+        # code...
     }
 }

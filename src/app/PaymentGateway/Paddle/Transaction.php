@@ -6,28 +6,35 @@ namespace App\PaymentGateway\Paddle;
 
 class Transaction
 {
-    private static int $count = 0; // With static you cannot get access through
-                                   //  an arrow notation(obj->prop) to properties of classes
-    public function __construct(
-        public float $amount,
-        public string $description
-    ) {
-        self::$count++;
+    private float $amount;
+
+    public function __construct(float $amount)
+    {
+        $this->amount = $amount;
     }
 
     public function process()
     {
-        array_map(static function () {
-            $this->amount = 35; // user static in classes for callbackfunctions to prevent
-        }, [1]);                // access to properties of classes
-        echo 'Processing paddle transaction...';
+        echo  'Processing $' . $this->getAmount() . ' transaction';
     }
 
     /**
-     * Get the value of count
+     * Get the value of amount
+     *
+     * @return float
      */
-    public static function getCount(): int
+    public function getAmount(): float
     {
-        return self::$count;
+        return $this->amount;
+    }
+
+    /**
+     * Set the value of amount
+     *
+     * @return  void
+     */
+    public function setAmount($amount): void
+    {
+            $this->amount = $amount;
     }
 }

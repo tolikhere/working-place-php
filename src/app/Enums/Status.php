@@ -2,15 +2,18 @@
 
 namespace App\Enums;
 
-class Status
+enum Status
 {
-    public const PAID     = 'paid';
-    public const PENDING  = 'pending';
-    public const DECLINED = 'declined';
+    case PAID;
+    case PENDING;
+    case DECLINED;
 
-    public const ALL_STATUSES = [
-        self::PAID     => 'Paid',
-        self::PENDING  => 'Pending',
-        self::DECLINED => 'Declined',
-    ];
+    public function toString(): string
+    {
+        return match ($this) {
+            Status::PAID => 'Paid',
+            Status::PENDING => 'Pending',
+            Status::DECLINED => 'Declined'
+        };
+    }
 }

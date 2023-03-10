@@ -19,12 +19,9 @@ class Transaction
      *
      * @return  self
      */
-    public function setStatus($status): self
+    public function setStatus(Status $status): self
     {
-        if (! isset(Status::ALL_STATUSES[$status])) {
-            throw new \InvalidArgumentException('Invalid status');
-        }
-        $this->status = $status;
+        $this->status = $status->toString();
 
         return $this;
     }

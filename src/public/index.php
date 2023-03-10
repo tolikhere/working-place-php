@@ -7,6 +7,6 @@ use App\PaymentGateway\Paddle\Transaction;
 
 $transaction = new Transaction();
 
-$transaction->setStatus(Status::DECLINED);
+$transaction->setStatus(Status::PAID);
 
 var_dump($transaction);

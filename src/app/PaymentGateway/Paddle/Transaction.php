@@ -13,6 +13,11 @@ class Transaction
         $this->amount = $amount;
     }
 
+    public function copyFrom(Transaction $transaction)
+    {
+        var_dump($transaction->amount, $transaction->sendEmail());
+    }
+
     public function process()
     {
         echo  'Processing $' . $this->amount . ' transaction';
@@ -29,6 +34,6 @@ class Transaction
 
     private function sendEmail()
     {
-        # code...
+        return true;
     }
 }

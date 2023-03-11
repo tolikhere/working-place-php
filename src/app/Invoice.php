@@ -4,7 +4,7 @@ namespace App;
 
 class Invoice
 {
-    private array $data;
+    private array $data = [];
 
     public function __get(string $name)
     {
@@ -18,5 +18,17 @@ class Invoice
     public function __set(string $name, $value): void
     {
         $this->data[$name] = $value;
+    }
+
+    public function __isset(string $name): bool
+    {
+        var_dump('isset');
+        return array_key_exists($name, $this->data);
+    }
+
+    public function __unset(string $name): void
+    {
+        var_dump('unset');
+        unset($this->data[$name]);
     }
 }

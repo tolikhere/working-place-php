@@ -4,8 +4,15 @@ namespace App;
 
 class Invoice
 {
-    public function __invoke()
+    private float  $amount;
+    private int    $id = 1;
+    private string $accountNumber = '012343252315';
+
+    public function __debugInfo(): ?array
     {
-        var_dump('invoked');
+        return [
+            'id'            => $this->id,
+            'accountNumber' => '****' . substr($this->accountNumber, -4),
+        ];
     }
 }

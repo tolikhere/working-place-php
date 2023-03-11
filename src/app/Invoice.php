@@ -2,23 +2,10 @@
 
 namespace App;
 
-class Invoice
+class Invoice implements \Stringable // may no use Interface but highly recommended
 {
-    protected function process(float $amount, string $description)
+    public function __toString(): string
     {
-        var_dump('process');
-    }
-
-    public function __call(string $name, array $arguments)
-    {
-        if (method_exists($this, $name)) {
-            //$this->$name(...$arguments);
-            call_user_func_array([$this, $name], $arguments);
-        }
-    }
-
-    public static function __callStatic(string $name, array $arguments)
-    {
-        var_dump("static", $name, $arguments);
+        return 'hello';
     }
 }

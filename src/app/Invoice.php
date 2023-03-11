@@ -4,16 +4,12 @@ namespace App;
 
 class Invoice
 {
-    private float $amount;
+    private array $data;
 
-    public function __construct(float $amount)
-    {
-        $this->amount = $amount;
-    }
     public function __get(string $name)
     {
-        if (property_exists($this, $name)) {
-            return $this->$name;
+        if (array_key_exists($name, $this->data)) {
+            return $this->data[$name];
         }
 
         return null;
@@ -21,8 +17,6 @@ class Invoice
 
     public function __set(string $name, $value): void
     {
-        if (property_exists($this, $name)) {
-            $this->$name = $value;
-        }
+        $this->data[$name] = $value;
     }
 }

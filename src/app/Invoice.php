@@ -2,10 +2,10 @@
 
 namespace App;
 
-class Invoice implements \Stringable // may no use Interface but highly recommended
+class Invoice
 {
-    public function __toString(): string
+    public function __invoke()
     {
-        return 'hello';
+        var_dump('invoked');
     }
 }

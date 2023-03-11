@@ -2,22 +2,14 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use App\Toaster;
-use App\ToasterPro;
+$fields = [
+    new \App\Text('textField'),
+    new \App\Checkbox('checkboxField'),
+    new \App\Radio('radioField'),
+];
 
-$toaster = new ToasterPro();
-
-$toaster->addSlice('bread');
-$toaster->addSlice('bread');
-$toaster->addSlice('bread');
-$toaster->addSlice('bread');
-$toaster->addSlice('bread');
-$toaster->addSlice('bread');
-
-//$toaster->toastBagel();
-
-foo($toaster);
-function foo(Toaster $toasterPro)
-{
-    $toasterPro->toast();
+foreach ($fields as $field) {
+    echo $field->render() . '<br>';
 }
+
+echo (new \App\Text('text'))->render();

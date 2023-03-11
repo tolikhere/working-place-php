@@ -1,39 +1,11 @@
 # My notes
 
-### Call parent's methods if you need them this way
+### Abstract classes:
+* Can't instantiate abstract classes __only extend__
+* Can contain abstract methods in addition to regular methods & properties
+    * Abstract methods know "what" but don't know "how" (only signature)
+    * Child classes __must__ implement abstract methods
+    * Child method can have a property but only with a default value
+    * Visibility of an abstract method can be public or protected
 
-```
-    class Child extends Parent
-    {
-        public function methodName()
-        {
-            parent::methodName();
-        }
-    }
-```
-
-### If you override parent's methods
-Then the child's signature of methods must the same as parent's
-
-And better name parameters the same as parent's
-
-```
-    class Parent
-    {
-        public function uniqueMethodName(string $param): string
-        {
-            return $param;
-        }
-    }
-
-    class Child extends Parent
-    {
-        public function uniqueMethodName(string $param): string
-        {
-            return toLowerCase($param);
-        }
-    }
-```
-
-## Do not forget to continue your notes...
-
+Use abstract classes and methods when you want to force the Child to have basic functionality and implement abstract methods

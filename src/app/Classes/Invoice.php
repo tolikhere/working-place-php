@@ -8,12 +8,6 @@ class Invoice
 {
     public function index(): string
     {
-        setcookie(
-            'userName',
-            'Tolik',
-            time() - (24 * 60 * 60)
-        );
-
         return 'Invoices';
     }
 

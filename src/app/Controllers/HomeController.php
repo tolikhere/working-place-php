@@ -13,10 +13,22 @@ class HomeController
         return View::make('index', ['foo' => 'bar']);
     }
 
+    public function download()
+    {
+        header('Content-Type: image/png');
+        header('Content-Disposition: attachment;filename="myfile.png"');
+
+        readfile(STORAGE_PATH . '/night.png');
+    }
+
     public function upload()
     {
         $filePath = STORAGE_PATH . '/' . $_FILES['receipt']['name'];
 
         move_uploaded_file($_FILES['receipt']['tmp_name'], $filePath);
+
+        header('Location: /');
+
+        exit;
     }
 }

@@ -12,40 +12,63 @@ class HomeController
     public function index(): View
     {
         try {
-            $db = new PDO('mysql:host=db;dbname=my_db', 'root', 'root', [
-                PDO::ATTR_EMULATE_PREPARES => false,
-            ]);
+            $db = new PDO(
+                "mysql:host={$_ENV['DB_HOST']};dbname={$_ENV['DB_DATABASE']}",
+                $_ENV['DB_USER'],
+                $_ENV['DB_PASS'],
+                [
+                    PDO::ATTR_EMULATE_PREPARES => false,
+                ]
+            );
             // PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ
 
-            $email = 'tomd@doe.com';
-            $name = 'Tom Doe';
+            $email = 'bor@doe.com';
+            $name = 'Bor Doe';
             $isActive = 1;
-            $createdAt = date('Y-m-d H:m:i', strtotime('07/11/2021 9:00PM'));
+            $createdAt = date('Y-m-d H:m:i');
+            $amount = 235.34;
 
-            $query = 'INSERT INTO users (email, full_name, is_active, created_at, updated_at)
-                      VALUES (:email, :name, :active, :date1, :date2)';
+            $userQuery = 'INSERT INTO users (email, full_name, is_active, created_at)
+                      VALUES (:email, :name, :active, :date)';
+            $invoiceQuery = 'INSERT INTO invoices (amount, user_id)
+                             VALUES (:amount, :user_id)';
 
-            $stmt = $db->prepare($query);
+            $db->beginTransaction();
 
-            $stmt->bindValue(':name', $name);
-            $stmt->bindValue(':email', $email);
-            $stmt->bindParam(':active', $isActive, PDO::PARAM_BOOL);
-            $stmt->bindValue(':date1', $createdAt);
-            $stmt->bindValue(':date2', $createdAt);
+            $userStmt = $db->prepare($userQuery);
+            $invoiceStmt = $db->prepare($invoiceQuery);
 
-            $isActive = 0;
-            $name = 'foo bar';
+            $userStmt->bindValue(':name', $name);
+            $userStmt->bindValue(':email', $email);
+            $userStmt->bindValue(':active', $isActive, PDO::PARAM_BOOL);
+            $userStmt->bindValue(':date', $createdAt);
+            $invoiceStmt->bindValue(':amount', (string) $amount, PDO::PARAM_STR);
 
-            $stmt->execute();
+            $userStmt->execute();
+            $userId = (int) $db->lastInsertId();
+            $invoiceStmt->bindValue(':user_id', $userId, PDO::PARAM_INT);
+            $invoiceStmt->execute();
 
-            $id = (int) $db->lastInsertId();
+            $db->commit();
 
-            $user = $db->query('SELECT * FROM users WHERE id = ' . $id)->fetch();
+            $fetchStmt = $db->prepare(
+                'SELECT invoices.id AS invoice_id, amount, user_id, full_name
+                FROM invoices
+                INNER JOIN users ON user_id = users.id
+                WHERE email = :email'
+            );
+
+            $fetchStmt->bindValue(':email', $email);
+
+            $fetchStmt->execute();
 
             echo '<pre>';
-            var_dump($user);
+            var_dump($fetchStmt->fetch(PDO::FETCH_ASSOC));
             echo '</pre>';
         } catch (\PDOException $e) {
+            if ($db->inTransaction()) {
+                $db->rollBack();
+            }
             throw new \PDOException($e->getMessage(), (int) $e->getCode());
         }
 

@@ -2,3 +2,4 @@ vendor/
 .editorconfig
 .dockerignore
 storage/
+.env
